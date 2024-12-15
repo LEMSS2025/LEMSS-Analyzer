@@ -1,0 +1,10 @@
+pandas
+numpy
+tqdm
+scipy
+scikit-learn
+matplotlib
+sentence-transformers
+transformers
+faiss-cpu
+pyserini

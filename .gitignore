@@ -1,0 +1,25 @@
+# Ignore .ipynb
+*.ipynb
+
+# Ignore .pyc
+*.pyc
+
+# Ignore .DS_Store
+.DS_Store
+
+# Ignore .idea
+.idea
+
+# Ignore .vscode
+.vscode
+
+# Ignore .pytest_cache
+.pytest_cache
+
+# Ignore __pycache__
+__pycache__
+
+# Ignore sensitive data
+data/clueweb/
+data/index_jsons/
+index/
