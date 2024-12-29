@@ -241,11 +241,11 @@ class EmbeddingAnalyzer:
 
         self.__plot_graph(range(2, df["round"].max() + 1), np.array(avg_similarity, dtype=np.float32),
                             f"Average {NUM_TO_STR[rank]}-ranked players \nsimilarity vs round",
-                            'Rounds Included', f'Average {NUM_TO_STR[rank]}-ranked players similarity',
+                            'Round', f'Average {NUM_TO_STR[rank]}-ranked players similarity',
                             file_to_save_mean.replace(".npy", ".png"))
         self.__plot_graph(range(2, df["round"].max() + 1), np.array(diameter_similarity, dtype=np.float32),
                             f"Diameter {NUM_TO_STR[rank]}-ranked players \nsimilarity vs round",
-                            'Rounds Included', f'Diameter {NUM_TO_STR[rank]}-ranked players similarity',
+                            'Round', f'Diameter {NUM_TO_STR[rank]}-ranked players similarity',
                             file_to_save_min.replace(".npy", ".png"))
 
     def __plot_consecutive_winner_similarity_over_time(self, df: pd.DataFrame, representation_num: int) -> None:
@@ -359,11 +359,11 @@ class EmbeddingAnalyzer:
 
         self.__plot_graph(range(2, df["round"].max() + 1), mean_matrix_for_graph,
                             "Average similarity of player documents vs round",
-                            'Rounds Included', 'Average similarity of player documents',
+                            'Round', 'Average similarity of player documents',
                             file_to_save_mean.replace(".npy", ".png"))
         self.__plot_graph(range(2, df["round"].max() + 1), min_matrix_for_graph,
                             "Diameter similarity of player documents vs round",
-                            'Rounds Included', 'Diameter similarity of player documents',
+                            'Round', 'Diameter similarity of player documents',
                             file_to_save_min.replace(".npy", ".png"))
 
         df = pd.DataFrame({"average_and_diameter_of_player_documents_mean": mean_matrix.mean(),
