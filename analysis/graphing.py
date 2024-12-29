@@ -1,3 +1,5 @@
+import os
+
 import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib as mpl
@@ -168,24 +170,7 @@ class Graphing:
         groups = ['all']
 
         label_to_color = {'L<=W': 'orange', 'L>W': 'blue', 'Wq': 'black'}
-
-        def get_winner_latex_label(col_name):
-            user, feature = columns_map[col_name]['user'], columns_map[col_name]['feature']
-            if user == 'winner in query':
-                W = 'W_q'
-            elif user == 'winner in other queries':
-                W = 'W_q'
-            else:
-                # W = 'W'
-                W = 'W_q'
-
-            qf = 'q' if feature == 'query' else '-q'
-            if FeatureHistoryRetriever.query_dependent:
-                return r'$' + W + '(' + qf + ')$'
-            else:
-                return r'$' + W + '$'
-
-        losers_labels = {'L<=W': r'$L \leq W_q$', 'L>W': r'$L > W_q$'}
+        losers_labels = {'L<=W': r'$L \leq W$', 'L>W': r'L > W'}
 
         for group, ax in zip(groups, [ax]):
             df_g = first_win_by_query
@@ -206,7 +191,7 @@ class Graphing:
             # Plot for winners
             winner_history = df_g['winner_history'].values
             winner_history_mean = np.stack(winner_history).mean(axis=0)
-            ax.plot(np.arange(-num_rounds_back, 1), winner_history_mean, label=get_winner_latex_label('winner_history'),
+            ax.plot(np.arange(-num_rounds_back, 1), winner_history_mean, label="W",
                     color='black', marker='|')
 
             ax.set_xticks(np.arange(-num_rounds_back, 1))
@@ -216,7 +201,8 @@ class Graphing:
         if with_legend:
             fig.legend(handles, labels, loc='upper center', ncol=len(label_to_color) + 1, bbox_to_anchor=(0.5, 1.1))
         else:
-            self.__save_legend_to_file(handles, labels, filename="features-legend.jpg", ncol=len(label_to_color) + 1, bbox_to_anchor=(0.5, 1.1))
+            self.__save_legend_to_file(handles, labels, filename=os.path.join(self.experiment_folder, "features-legend.jpg"),
+                                       ncol=len(label_to_color) + 1, bbox_to_anchor=(0.5, 1.1))
 
         if feature_title is not None:
             fig.suptitle(feature_title, fontsize=20)
