@@ -169,7 +169,7 @@ class Graphing:
         fig, ax = plt.subplots(1, 1, figsize=(5, 4))
         groups = ['all']
 
-        label_to_color = {'L<=W': 'orange', 'L>W': 'blue', 'Wq': 'black'}
+        label_to_color = {'L<=W': 'orange', 'L>W': 'blue', 'W': 'black'}
         losers_labels = {'L<=W': r'$L \leq W$', 'L>W': r'L > W'}
 
         for group, ax in zip(groups, [ax]):
