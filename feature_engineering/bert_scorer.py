@@ -4,8 +4,8 @@ from tqdm import tqdm
 import torch
 from transformers import AutoTokenizer, AutoModel, AutoModelForSequenceClassification
 
-from constants.constants import (BERT_MODEL_LINK,
-                                 BERT_MAX_LEN, SBERT_SIMILARITY_FILENAME)
+from constants.constants import BERT_MODEL_LINK, BERT_MAX_LEN
+
 
 class BertScorer:
     """

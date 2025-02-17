@@ -8,7 +8,6 @@ from constants.constants import (XML_TOPIC_HEADER, XML_NUMBER_HEADER, XML_QUERY_
                                  ANALYZED_QUERY, ORIGINAL_QUERY, ANALYZED)
 
 
-
 class QueryParser:
     """
     Class responsible for parsing and analyzing queries from XML files using the Krovetz stemmer.

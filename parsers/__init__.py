@@ -5,3 +5,5 @@ This module provides parsers for different file formats, including TREC files an
 
 from .query_parser import QueryParser
 from .trec_parser import TrecParser
+
+__all__ = ['QueryParser', 'TrecParser']

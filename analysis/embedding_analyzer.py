@@ -1,5 +1,3 @@
-from constants.constants import NUM_TO_STR, NUM_TO_REPRESENTATION, EMBEDDING_FILENAMES, CONFIDENCE_INTERVAL
-
 import pickle
 import os
 from itertools import combinations
@@ -8,6 +6,9 @@ from typing import Union, List, Dict
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+
+from constants.constants import NUM_TO_STR, NUM_TO_REPRESENTATION, EMBEDDING_FILENAMES, CONFIDENCE_INTERVAL
+
 
 class EmbeddingAnalyzer:
     def __init__(self, experiment_path: str) -> None:
@@ -197,13 +198,17 @@ class EmbeddingAnalyzer:
 
         # Save the results
         folder_to_save = os.path.join(self.experiment_path, "embeddings_graphs", "plot_first_second_similarity_over_time")
-        file_to_to_save = os.path.join(folder_to_save, f"{compare_positions[0]}-{compare_positions[1]}-{NUM_TO_REPRESENTATION[representation_num]}-{os.path.basename(self.experiment_path)}.npy")
+        file_to_to_save = os.path.join(folder_to_save, f"{compare_positions[0]}-{compare_positions[1]}-"
+                            f"{NUM_TO_REPRESENTATION[representation_num]}-{os.path.basename(self.experiment_path)}.npy")
         self.__save_numpy(np.array(round_similarity_to_save, dtype=np.float32), folder_to_save, file_to_to_save)
 
         self.__plot_graph(range(1, df["round"].max() + 1), np.array(avg_first_second_similarity),
-                          f"Average {NUM_TO_STR[compare_positions[0]]}-{NUM_TO_STR[compare_positions[1]]} ranked players \nsimilarity vs round",
-                          'Round', f"Average {NUM_TO_STR[compare_positions[0]]}-{NUM_TO_STR[compare_positions[1]]} ranked players similarity",
-                          file_to_to_save.replace(".npy", ".png"), error_bars=CONFIDENCE_INTERVAL * np.array(sd_first_second_similarity)/np.sqrt(np.array(len_rounds)[0]))
+                          f"Average {NUM_TO_STR[compare_positions[0]]}-{NUM_TO_STR[compare_positions[1]]} ranked "
+                          f"players \nsimilarity vs round",
+                          'Round', f"Average {NUM_TO_STR[compare_positions[0]]}-"
+                                   f"{NUM_TO_STR[compare_positions[1]]} ranked players similarity",
+                          file_to_to_save.replace(".npy", ".png"),
+                error_bars=CONFIDENCE_INTERVAL * np.array(sd_first_second_similarity)/np.sqrt(np.array(len_rounds)[0]))
 
     def __plot_rank_diameter_and_average_over_time(self, df: pd.DataFrame, representation_num: int, rank: int) -> None:
         """
@@ -232,12 +237,17 @@ class EmbeddingAnalyzer:
 
         # Save the results
         folder_to_save_mean = os.path.join(self.experiment_path, "embeddings_graphs", "plot_rank_diameter_and_average_over_time-mean")
-        file_to_save_mean = os.path.join(folder_to_save_mean, f"{rank}-{NUM_TO_REPRESENTATION[representation_num]}-{os.path.basename(self.experiment_path)}.npy")
-        self.__save_numpy(np.array(round_rank_measurements_mean_to_save, dtype=np.float32), folder_to_save_mean, file_to_save_mean)
+        file_to_save_mean = os.path.join(folder_to_save_mean, f"{rank}-{NUM_TO_REPRESENTATION[representation_num]}-"
+                                                              f"{os.path.basename(self.experiment_path)}.npy")
+        self.__save_numpy(np.array(round_rank_measurements_mean_to_save, dtype=np.float32), folder_to_save_mean,
+                          file_to_save_mean)
 
-        folder_to_save_min = os.path.join(self.experiment_path, "embeddings_graphs", "plot_rank_diameter_and_average_over_time-min")
-        file_to_save_min = os.path.join(folder_to_save_min, f"{rank}-{NUM_TO_REPRESENTATION[representation_num]}-{os.path.basename(self.experiment_path)}.npy")
-        self.__save_numpy(np.array(round_rank_measurements_min_to_save, dtype=np.float32), folder_to_save_min, file_to_save_min)
+        folder_to_save_min = os.path.join(self.experiment_path, "embeddings_graphs",
+                                          "plot_rank_diameter_and_average_over_time-min")
+        file_to_save_min = os.path.join(folder_to_save_min, f"{rank}-{NUM_TO_REPRESENTATION[representation_num]}-"
+                                                            f"{os.path.basename(self.experiment_path)}.npy")
+        self.__save_numpy(np.array(round_rank_measurements_min_to_save, dtype=np.float32), folder_to_save_min,
+                          file_to_save_min)
 
         self.__plot_graph(range(2, df["round"].max() + 1), np.array(avg_similarity, dtype=np.float32),
                             f"Average {NUM_TO_STR[rank]}-ranked players \nsimilarity vs round",
@@ -281,7 +291,8 @@ class EmbeddingAnalyzer:
 
         # Save the results
         folder_to_save = os.path.join(self.experiment_path, "embeddings_graphs", "winner_similarity_over_time")
-        file_to_save = os.path.join(folder_to_save, f"{NUM_TO_REPRESENTATION[representation_num]}-{os.path.basename(self.experiment_path)}.npy")
+        file_to_save = os.path.join(folder_to_save, f"{NUM_TO_REPRESENTATION[representation_num]}-"
+                                                    f"{os.path.basename(self.experiment_path)}.npy")
         self.__save_numpy(np.array(similarity_matrix, dtype=np.float32), folder_to_save, file_to_save)
 
         self.__plot_graph(range(2, df["round"].max() + 1), np.array(average_similarity, dtype=np.float32),
@@ -345,11 +356,14 @@ class EmbeddingAnalyzer:
 
         # Save the results
         folder_to_save_mean = os.path.join(self.experiment_path, "embeddings_graphs", "average_and_diameter_of_player_documents-mean")
-        file_to_save_mean = os.path.join(folder_to_save_mean, f"{NUM_TO_REPRESENTATION[representation_num]}-{os.path.basename(self.experiment_path)}.npy")
+        file_to_save_mean = os.path.join(folder_to_save_mean, f"{NUM_TO_REPRESENTATION[representation_num]}-"
+                                                              f"{os.path.basename(self.experiment_path)}.npy")
         self.__save_numpy(mean_matrix, folder_to_save_mean, file_to_save_mean)
 
-        folder_to_save_min = os.path.join(self.experiment_path, "embeddings_graphs", "average_and_diameter_of_player_documents-min")
-        file_to_save_min = os.path.join(folder_to_save_min, f"{NUM_TO_REPRESENTATION[representation_num]}-{os.path.basename(self.experiment_path)}.npy")
+        folder_to_save_min = os.path.join(self.experiment_path, "embeddings_graphs",
+                                          "average_and_diameter_of_player_documents-min")
+        file_to_save_min = os.path.join(folder_to_save_min, f"{NUM_TO_REPRESENTATION[representation_num]}-"
+                                                            f"{os.path.basename(self.experiment_path)}.npy")
         self.__save_numpy(min_matrix, folder_to_save_min, file_to_save_min)
 
         mean_matrix_for_graph = mean_matrix.swapaxes(1, 2)
@@ -369,7 +383,8 @@ class EmbeddingAnalyzer:
         df = pd.DataFrame({"average_and_diameter_of_player_documents_mean": mean_matrix.mean(),
                             "average_and_diameter_of_player_documents_min": min_matrix.mean()},
                             index=[0])
-        df.to_csv(os.path.join(self.experiment_path, "embeddings_graphs", "average_and_diameter_of_player_documents.csv"))
+        df.to_csv(os.path.join(self.experiment_path, "embeddings_graphs",
+                               "average_and_diameter_of_player_documents.csv"))
 
     def __save_rank_diameter_and_average_last_round(self, df: pd.DataFrame, representation_num: int) -> None:
         """
@@ -390,13 +405,17 @@ class EmbeddingAnalyzer:
 
         # Save the results
         numpy_mean_to_save = np.array(round_avg_similarity, dtype=np.float32)
-        folder_to_save_mean = os.path.join(self.experiment_path, "embeddings_graphs", "rank_diameter_and_average_last_round-mean")
-        file_to_save_mean = os.path.join(folder_to_save_mean, f"{NUM_TO_REPRESENTATION[representation_num]}-{os.path.basename(self.experiment_path)}.npy")
+        folder_to_save_mean = os.path.join(self.experiment_path, "embeddings_graphs",
+                                           "rank_diameter_and_average_last_round-mean")
+        file_to_save_mean = os.path.join(folder_to_save_mean, f"{NUM_TO_REPRESENTATION[representation_num]}-"
+                                                              f"{os.path.basename(self.experiment_path)}.npy")
         self.__save_numpy(numpy_mean_to_save, folder_to_save_mean, file_to_save_mean)
 
         numpy_min_to_save = np.array(round_diameter_similarity, dtype=np.float32)
-        folder_to_save_min = os.path.join(self.experiment_path, "embeddings_graphs", "rank_diameter_and_average_last_round-min")
-        file_to_save_min = os.path.join(folder_to_save_min, f"{NUM_TO_REPRESENTATION[representation_num]}-{os.path.basename(self.experiment_path)}.npy")
+        folder_to_save_min = os.path.join(self.experiment_path, "embeddings_graphs",
+                                          "rank_diameter_and_average_last_round-min")
+        file_to_save_min = os.path.join(folder_to_save_min, f"{NUM_TO_REPRESENTATION[representation_num]}-"
+                                                            f"{os.path.basename(self.experiment_path)}.npy")
         self.__save_numpy(numpy_min_to_save, folder_to_save_min, file_to_save_min)
 
         df = pd.DataFrame({"rank_diameter_and_average_last_round_mean": numpy_mean_to_save.mean(),
@@ -404,7 +423,8 @@ class EmbeddingAnalyzer:
                             index=[0])
         df.to_csv(os.path.join(self.experiment_path, "embeddings_graphs", "rank_diameter_and_average_last_round.csv"))
 
-    def __plot_average_similarity_of_player_documents_consecutive_rounds(self, df: pd.DataFrame, representation_num: int) -> None:
+    def __plot_average_similarity_of_player_documents_consecutive_rounds(self, df: pd.DataFrame,
+                                                                         representation_num: int) -> None:
         """
         Plot the average similarity of player documents between consecutive rounds.
 
@@ -431,8 +451,10 @@ class EmbeddingAnalyzer:
 
         # Save the results
         numpy_matrix = np.array(matrix_metrics, dtype=np.float32)
-        folder_to_save = os.path.join(self.experiment_path, "embeddings_graphs", "average_of_player_documents_consecutive_rounds")
-        file_to_save = os.path.join(folder_to_save, f"{NUM_TO_REPRESENTATION[representation_num]}-{os.path.basename(self.experiment_path)}.npy")
+        folder_to_save = os.path.join(self.experiment_path, "embeddings_graphs",
+                                      "average_of_player_documents_consecutive_rounds")
+        file_to_save = os.path.join(folder_to_save, f"{NUM_TO_REPRESENTATION[representation_num]}-"
+                                                    f"{os.path.basename(self.experiment_path)}.npy")
         self.__save_numpy(numpy_matrix, folder_to_save, file_to_save)
 
         mean_matrix_for_graph = numpy_matrix.swapaxes(1, 2)
@@ -445,7 +467,8 @@ class EmbeddingAnalyzer:
 
         df = pd.DataFrame({"average_of_player_documents_consecutive_rounds_mean": numpy_matrix.mean()},
                           index=[0])
-        df.to_csv(os.path.join(self.experiment_path, "embeddings_graphs", "average_of_player_documents_consecutive_rounds.csv"))
+        df.to_csv(os.path.join(self.experiment_path, "embeddings_graphs",
+                               "average_of_player_documents_consecutive_rounds.csv"))
 
     def __plot_diameter_and_average_over_time(self, df: pd.DataFrame, representation_num: int) -> None:
         """
@@ -461,7 +484,8 @@ class EmbeddingAnalyzer:
         for round_num in range(1, df["round"].max() + 1):
             round_df = df[df["round"] == round_num]
             groups = round_df.groupby('query_id').filter(lambda x: len(x) > 1).groupby('query_id')
-            round_rank_measurements = groups.apply(self.__calculate_pairwise_similarity, self.representations, representation_num, return_min=True)
+            round_rank_measurements = groups.apply(self.__calculate_pairwise_similarity, self.representations,
+                                                   representation_num, return_min=True)
 
             round_rank_measurements_mean_to_save.append(round_rank_measurements.apply(lambda x: x[0]))
             round_rank_measurements_min_to_save.append(round_rank_measurements.apply(lambda x: x[1]))
@@ -470,13 +494,19 @@ class EmbeddingAnalyzer:
             diameter_similarity.append(round_rank_measurements.apply(lambda x: x[1]).mean())
 
         # Save the results
-        folder_to_save_mean = os.path.join(self.experiment_path, "embeddings_graphs", "plot_diameter_and_average_over_time-mean")
-        file_to_save_mean = os.path.join(folder_to_save_mean, f"{NUM_TO_REPRESENTATION[representation_num]}-{os.path.basename(self.experiment_path)}.npy")
-        self.__save_numpy(np.array(round_rank_measurements_mean_to_save, dtype=np.float32), folder_to_save_mean, file_to_save_mean)
+        folder_to_save_mean = os.path.join(self.experiment_path, "embeddings_graphs",
+                                           "plot_diameter_and_average_over_time-mean")
+        file_to_save_mean = os.path.join(folder_to_save_mean, f"{NUM_TO_REPRESENTATION[representation_num]}-"
+                                                              f"{os.path.basename(self.experiment_path)}.npy")
+        self.__save_numpy(np.array(round_rank_measurements_mean_to_save, dtype=np.float32), folder_to_save_mean,
+                          file_to_save_mean)
 
-        folder_to_save_min = os.path.join(self.experiment_path, "embeddings_graphs", "plot_diameter_and_average_over_time-min")
-        file_to_save_min = os.path.join(folder_to_save_min, f"{NUM_TO_REPRESENTATION[representation_num]}-{os.path.basename(self.experiment_path)}.npy")
-        self.__save_numpy(np.array(round_rank_measurements_min_to_save, dtype=np.float32), folder_to_save_min, file_to_save_min)
+        folder_to_save_min = os.path.join(self.experiment_path, "embeddings_graphs",
+                                          "plot_diameter_and_average_over_time-min")
+        file_to_save_min = os.path.join(folder_to_save_min, f"{NUM_TO_REPRESENTATION[representation_num]}-"
+                                                            f"{os.path.basename(self.experiment_path)}.npy")
+        self.__save_numpy(np.array(round_rank_measurements_min_to_save, dtype=np.float32), folder_to_save_min,
+                          file_to_save_min)
 
         self.__plot_graph(range(1, df["round"].max() + 1), np.array(avg_similarity, dtype=np.float32),
                             "Average group similarity vs round",

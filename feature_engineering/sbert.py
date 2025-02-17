@@ -25,10 +25,12 @@ class SBERT:
         """
         logging.info("Loading model...")
         self.__sbert_model_embedding = SentenceTransformer(model_name,
-                                                           device=torch.device("cuda" if torch.cuda.is_available() else "cpu"))
+                                                           device=torch.device("cuda" if torch.cuda.is_available()
+                                                                               else "cpu"))
         logging.info("Model loaded successfully.")
 
-    def create_sbert_embeddings(self, queries_to_docnos: dict, docs_dict: dict, faiss_index=None, experiment_folder: str = None) -> None:
+    def create_sbert_embeddings(self, queries_to_docnos: dict, docs_dict: dict, faiss_index=None,
+                                experiment_folder: str = None) -> None:
         """
         Create SBERT embeddings for a given set of queries and documents.
 
@@ -51,7 +53,8 @@ class SBERT:
 
             embeddings_dict = {docno: emb for docno, emb in zip(docs_qid, embeddings)}
             for docno in docs_qid:
-                cosine_similarities[docno] = {docno2: cos_sim(embeddings_dict[docno], embeddings_dict[docno2]).cpu().item() for docno2 in
+                cosine_similarities[docno] = {docno2: cos_sim(embeddings_dict[docno],
+                                                              embeddings_dict[docno2]).cpu().item() for docno2 in
                                               queries_to_docnos[qid] if docno != docno2}
 
         # Save cosine similarities

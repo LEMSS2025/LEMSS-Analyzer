@@ -106,7 +106,8 @@ class Graphing:
         fig_legend = plt.figure(figsize=(3, 2))
         ax_legend = fig_legend.add_subplot(111)
 
-        legend = ax_legend.legend(handles, labels, loc='upper center', ncol=ncol, frameon=False, bbox_to_anchor=bbox_to_anchor)
+        legend = ax_legend.legend(handles, labels, loc='upper center', ncol=ncol, frameon=False,
+                                  bbox_to_anchor=bbox_to_anchor)
         ax_legend.axis('off')
 
         fig_legend.canvas.draw()
@@ -144,14 +145,14 @@ class Graphing:
 
         # Retrieve user feature history
         first_win_by_query['user_history'] = first_win_by_query.apply(
-            lambda x: FeatureHistoryRetriever.get_user_feature_history(df.copy(), feature, player=x['player'], qid=x['qid'],
-                                               win_round=x['round'], num_rounds_back=num_rounds_back), axis=1)
+            lambda x: FeatureHistoryRetriever.get_user_feature_history(df.copy(), feature, player=x['player'],
+                                        qid=x['qid'], win_round=x['round'], num_rounds_back=num_rounds_back), axis=1)
         columns_map['user_history'] = {'user': 'loser', 'feature': 'query'}
 
         if user_other_queries:
             first_win_by_query['user_other_queries_history'] = first_win_by_query.apply(
-                lambda x: FeatureHistoryRetriever.get_user_feature_history_other_queries(df.copy(), feature, player=x['player'], qid=x['qid'],
-                                                                 win_round=x['round'], num_rounds_back=num_rounds_back),
+                lambda x: FeatureHistoryRetriever.get_user_feature_history_other_queries(df.copy(), feature,
+                            player=x['player'], qid=x['qid'], win_round=x['round'], num_rounds_back=num_rounds_back),
                 axis=1)
             columns_map['user_other_queries_history'] = {'user': 'loser', 'feature': 'other queries'}
 
@@ -163,7 +164,8 @@ class Graphing:
 
         # Label based on user and winner feature comparison
         first_win_by_query['label'] = first_win_by_query.apply(
-            lambda x: FeatureHistoryRetriever.get_label(winner=x['winner_history'][0], user=x['user_history'][0]), axis=1)
+            lambda x: FeatureHistoryRetriever.get_label(winner=x['winner_history'][0], user=x['user_history'][0]),
+            axis=1)
 
         # Plotting setup
         fig, ax = plt.subplots(1, 1, figsize=(5, 4))

@@ -2,12 +2,12 @@ import os
 import logging
 
 import pandas as pd
-from pyserini.search.lucene.ltr import *
+from pyserini.search.lucene.ltr import (BM25Stat, LmDirStat, TfStat, NormalizedTfStat, DocSize, SumPooler,
+                                        FeatureExtractor)
 from tqdm import tqdm
 
 from constants.constants import (NUM_THREADS, PYSERINI_BATCH_SIZE, PYSERINI_CONTENTS, PYSERINI_DOCIDS, ANALYZED,
                                  COLUMN_QID, COLUMN_RENAMED_DOCNO, COLUMN_COUNT)
-
 
 
 class FeatureExtractorWrapper:

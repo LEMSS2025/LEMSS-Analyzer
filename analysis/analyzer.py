@@ -4,9 +4,9 @@ import logging
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from .data_cleaner import DataCleaner
-from .feature_history import FeatureHistoryRetriever
-from .graphing import Graphing
+from data_cleaner import DataCleaner
+from feature_history import FeatureHistoryRetriever
+from graphing import Graphing
 
 
 class Analyzer:

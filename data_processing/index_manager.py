@@ -19,7 +19,8 @@ class IndexManager:
         :param index_path: Path to the existing Lucene index.
         """
         self.__trectext_path = trectext_path
-        self.__indexer_args = ["-index", index_path, "-storeDocvectors", "-storeContents", "-stemmer", "krovetz", "-keepStopwords"]
+        self.__indexer_args = ["-index", index_path, "-storeDocvectors", "-storeContents", "-stemmer", "krovetz",
+                               "-keepStopwords"]
 
     def add_documents_to_index(self) -> pd.DataFrame:
         """

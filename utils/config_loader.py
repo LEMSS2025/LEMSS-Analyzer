@@ -1,5 +1,6 @@
 import json
 
+
 class ConfigLoader:
     """
     Class to load and handle configuration settings for the experiment.

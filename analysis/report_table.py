@@ -78,4 +78,3 @@ class ReportTable:
                 total_wins[player] = total_wins.get(player, 0) + wins
 
         return max(total_wins, key=total_wins.get)
-

@@ -29,7 +29,8 @@ class FeatureHistoryRetriever:
         :return: List of feature values for the specified rounds.
         """
         rounds_to_consider = [win_round - i for i in range(num_rounds_back + 1)]
-        user_df = df[(df['player'] == player) & (df['qid'] == qid) & (df['round'].isin(rounds_to_consider))].sort_values('round')
+        user_df = (df[(df['player'] == player) & (df['qid'] == qid) & (df['round'].isin(rounds_to_consider))].
+                   sort_values('round'))
 
         return user_df[feature].values
 
@@ -49,7 +50,8 @@ class FeatureHistoryRetriever:
         :return: List of average feature values across other queries.
         """
         rounds_to_consider = [win_round - i for i in range(num_rounds_back + 1)]
-        user_df = df[(df['player'] == player) & (df['qid'] == qid) & (df['round'].isin(rounds_to_consider))].sort_values('round')
+        user_df = (df[(df['player'] == player) & (df['qid'] == qid) & (df['round'].isin(rounds_to_consider))].
+                   sort_values('round'))
 
         return user_df.groupby('round')[feature].mean().reset_index().sort_values('round')[feature].values
 
@@ -68,7 +70,8 @@ class FeatureHistoryRetriever:
         :return: List of feature values for the specified rounds.
         """
         rounds_to_consider = [win_round - i for i in range(num_rounds_back + 1)]
-        winner_df = df[(df['is_winner']) & (df['qid'] == qid) & (df['round'].isin(rounds_to_consider))].sort_values('round')
+        winner_df = (df[(df['is_winner']) & (df['qid'] == qid) & (df['round'].isin(rounds_to_consider))].
+                     sort_values('round'))
 
         return winner_df[feature].values
 
@@ -87,9 +90,11 @@ class FeatureHistoryRetriever:
         :return: List of average feature values for the winner across other queries.
         """
         rounds_to_consider = [win_round - i for i in range(num_rounds_back + 1)]
-        winners_docnos = df[(df['is_winner']) & (df['qid'] == qid) & (df['round'].isin(rounds_to_consider))]['docno'].values
+        winners_docnos = df[(df['is_winner']) &
+                            (df['qid'] == qid) & (df['round'].isin(rounds_to_consider))]['docno'].values
 
-        return df[(df['docno'].isin(winners_docnos)) & (df['qid'] == qid)].groupby('round')[feature].mean().reset_index().sort_values('round')[feature].values
+        return df[(df['docno'].isin(winners_docnos)) &
+                  (df['qid'] == qid)].groupby('round')[feature].mean().reset_index().sort_values('round')[feature].values
 
     @staticmethod
     def get_other_winner_feature_history_other_queries(
@@ -106,7 +111,8 @@ class FeatureHistoryRetriever:
         :return: List of average feature values for the winner across other queries.
         """
         rounds_to_consider = [win_round - i for i in range(num_rounds_back + 1)]
-        winner_df = df[(df['is_winner']) & (df['qid'] == qid) & (df['round'].isin(rounds_to_consider))].sort_values('round')
+        winner_df = df[(df['is_winner'])& (df['qid'] == qid) &
+                       (df['round'].isin(rounds_to_consider))].sort_values('round')
 
         return winner_df.groupby('round')[feature].mean().reset_index().sort_values('round')[feature].values
 
@@ -129,7 +135,8 @@ class FeatureHistoryRetriever:
 
         for r in rounds_to_consider:
             other_winners_docnos = df[(df['is_winner']) & (df['qid'] == qid) & (df['round'] == r)]['docno'].values
-            other_winners_values_in_current_query = df[(df['docno'].isin(other_winners_docnos)) & (df['qid'] == qid)][feature].mean()
+            other_winners_values_in_current_query = df[(df['docno'].isin(other_winners_docnos))
+                                                       & (df['qid'] == qid)][feature].mean()
             f_history.append(other_winners_values_in_current_query)
 
         return f_history
@@ -150,9 +157,11 @@ class FeatureHistoryRetriever:
         :return: List of aggregated feature values for the specified rounds.
         """
         rounds_to_consider = [win_round - i for i in range(num_rounds_back + 1)]
-        winners_docnos = df[(df['is_winner']) & (df['qid'] == qid) & (df['round'].isin(rounds_to_consider))]['docno'].values
+        winners_docnos = df[(df['is_winner'])& (df['qid'] == qid) &
+                            (df['round'].isin(rounds_to_consider))]['docno'].values
 
-        return df[(df['docno'].isin(winners_docnos)) & (df['qid'] == qid)].groupby('round')[feature].agg(agg).reset_index().sort_values('round')[feature].values
+        return df[(df['docno'].isin(winners_docnos)) &
+            (df['qid'] == qid)].groupby('round')[feature].agg(agg).reset_index().sort_values('round')[feature].values
 
     @staticmethod
     def get_label(winner: float, user: float) -> str:

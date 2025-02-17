@@ -22,8 +22,8 @@ class FeatureExtractor:
     Class responsible for extracting features from documents and queries.
     """
 
-    def __init__(self, trectext_path: str, queries_folder: str, output_path: str, index_path: str, experiment_folder: str,
-                 embedding_mode=True):
+    def __init__(self, trectext_path: str, queries_folder: str, output_path: str, index_path: str,
+                 experiment_folder: str, embedding_mode=True):
         """
         Initialize the FeatureExtractor.
 
@@ -42,8 +42,10 @@ class FeatureExtractor:
         self.__embedding_mode = embedding_mode
 
         if embedding_mode:
-            self.__faiss_index_bert, self.__bert_index_path = self.__init_faiss_indices_embeddings(SBERT_INDEX_FILENAME, SBERT_DIMENSION)
-            self.__faiss_index_e5, self.__e5_index_path = self.__init_faiss_indices_embeddings(E5_INDEX_FILENAME, E5_DIMENSION)
+            self.__faiss_index_bert, self.__bert_index_path = self.__init_faiss_indices_embeddings(SBERT_INDEX_FILENAME,
+                                                                                                   SBERT_DIMENSION)
+            self.__faiss_index_e5, self.__e5_index_path = self.__init_faiss_indices_embeddings(E5_INDEX_FILENAME,
+                                                                                               E5_DIMENSION)
 
     def extract_features(self) -> None:
         """
@@ -109,7 +111,8 @@ class FeatureExtractor:
 
         :return: Dictionary mapping query IDs to query text.
         """
-        query_files = [os.path.join(self.__queries_folder, file) for file in os.listdir(self.__queries_folder) if file.endswith('.xml')]
+        query_files = [os.path.join(self.__queries_folder, file) for file in os.listdir(self.__queries_folder) if
+                       file.endswith('.xml')]
         query_parser = QueryParser(query_files)
         queries = query_parser.query_loader()
         logging.info("Queries loaded and preprocessed successfully.")

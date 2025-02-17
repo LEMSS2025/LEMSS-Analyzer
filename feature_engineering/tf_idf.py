@@ -50,7 +50,7 @@ class TFIDF:
 
         # Generate a binary TF-IDF matrix for Jaccard calculation
         binary_tf_idf = self.__tf_idf.copy()
-        binary_tf_idf.data = np.where(binary_tf_idf.data != 0, 1, 0) # Check without data, check the speed and if moves to memory
+        binary_tf_idf.data = np.where(binary_tf_idf.data != 0, 1, 0)
 
         # Calculate and save Jaccard similarities
         jaccard_dict = self.__compute_jaccard_similarity(binary_tf_idf, self.__docnos)

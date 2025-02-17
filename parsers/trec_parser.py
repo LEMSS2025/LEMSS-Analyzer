@@ -4,8 +4,7 @@ from typing import List, Tuple
 
 import pandas as pd
 
-from constants.constants import (COLUMN_DOCNO, COLUMN_TEXT, COLUMN_QID,
-                                 COLUMN_RENAMED_DOCNO, COLUMN_DOCUMENT,
+from constants.constants import (COLUMN_DOCNO, COLUMN_TEXT, COLUMN_QID, COLUMN_RENAMED_DOCNO, COLUMN_DOCUMENT,
                                  TAG_DOC, TAG_DOCNO, TAG_TEXT)
 
 

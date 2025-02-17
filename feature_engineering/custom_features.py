@@ -1,12 +1,13 @@
-import pandas as pd
 import logging
 
+import pandas as pd
 import nltk
 from nltk.corpus import stopwords
 from scipy.stats import entropy as scipy_entropy
 from pyserini.analysis import Analyzer, get_lucene_analyzer
 
 from constants.constants import PYSEIRNI_KROVETZ_STEMMER
+
 
 class CustomFeatures:
     """
@@ -25,8 +26,10 @@ class CustomFeatures:
         logging.info("Stopwords downloaded and set up successfully.")
 
         logging.info("Initializing Krovetz stemmer and analyzer...")
-        self.__analyzer_with_stopwrods = Analyzer(get_lucene_analyzer(stemmer=PYSEIRNI_KROVETZ_STEMMER, stopwords=False))
-        self.__analyzer_without_stopwrods = Analyzer(get_lucene_analyzer(stemmer=PYSEIRNI_KROVETZ_STEMMER, stopwords=True))
+        self.__analyzer_with_stopwrods = Analyzer(get_lucene_analyzer(stemmer=PYSEIRNI_KROVETZ_STEMMER,
+                                                                      stopwords=False))
+        self.__analyzer_without_stopwrods = Analyzer(get_lucene_analyzer(stemmer=PYSEIRNI_KROVETZ_STEMMER,
+                                                                         stopwords=True))
         logging.info("Analyzer initialized successfully.")
 
     def frac_stop(self, text_series: pd.Series) -> pd.Series:
